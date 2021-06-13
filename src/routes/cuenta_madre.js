@@ -1,9 +1,9 @@
 module.exports = app => {
-    const Cliente = app.db.models.Cliente;
+    const Cuenta_madre = app.db.models.Cuenta_madre;
 
-    app.route('/cliente')
+    app.route('/cuenta_madre')
         .get((req, res) => {
-            Cliente.findAll()
+            Cuenta_madre.findAll()
                 .then(result => res.json(result))
                 .catch(error => {
                     res.status(412).json({
@@ -13,16 +13,16 @@ module.exports = app => {
         })
 
         .post((req, res) => {
-            Cliente.create(req.body)
+            Cuenta_madre.create(req.body)
                 .then(result => res.json(result))
                 .catch(error => res.json(error.errors));
         });
 
-    app.route('/cliente/:id')
+    app.route('/cuenta_madre/:id')
         .get((req, res) => {
-            Cliente.findOne({
+            Cuenta_madre.findOne({
                     where: {
-                        id_cliente: req.params.id
+                        id_cuenta_madre: req.params.id
                     }
                 })
                 .then(result => res.json(result))
@@ -33,9 +33,9 @@ module.exports = app => {
                 })
         })
         .put((req, res) => {
-            Cliente.update(req.body, {
+            Cuenta_madre.update(req.body, {
                     where: {
-                        id_cliente: req.params.id
+                        id_cuenta_madre: req.params.id
                     }
                 })
                 .then(result => res.sendStatus(204))
@@ -47,9 +47,9 @@ module.exports = app => {
         })
         .delete((req, res) => {
             console.log(req.params);
-            Cliente.destroy({
+            Cuenta_madre.destroy({
                     where: {
-                        id_cliente: req.params.id
+                        id_cuenta_madre: req.params.id
                     }
                 })
                 .then(result => res.sendStatus(204))

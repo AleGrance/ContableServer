@@ -1,9 +1,9 @@
 "use strict";
 
 module.exports = function (app) {
-  var Cuenta_madre = app.db.models.Cuenta_madre;
-  app.route('/cuenta_madre').get(function (req, res) {
-    Cuenta_madre.findAll().then(function (result) {
+  var Cuenta_contable = app.db.models.Cuenta_contable;
+  app.route('/cuenta_contable').get(function (req, res) {
+    Cuenta_contable.findAll().then(function (result) {
       return res.json(result);
     })["catch"](function (error) {
       res.status(412).json({
@@ -11,16 +11,16 @@ module.exports = function (app) {
       });
     });
   }).post(function (req, res) {
-    Cuenta_madre.create(req.body).then(function (result) {
+    Cuenta_contable.create(req.body).then(function (result) {
       return res.json(result);
     })["catch"](function (error) {
       return res.json(error.errors);
     });
   });
-  app.route('/cuenta_madre/:id').get(function (req, res) {
-    Cuenta_madre.findOne({
+  app.route('/cuenta_contable/:id').get(function (req, res) {
+    Cuenta_contable.findOne({
       where: {
-        id_cuenta_madre: req.params.id
+        id_cuenta_contable: req.params.id
       }
     }).then(function (result) {
       return res.json(result);
@@ -30,9 +30,9 @@ module.exports = function (app) {
       });
     });
   }).put(function (req, res) {
-    Cuenta_madre.update(req.body, {
+    Cuenta_contable.update(req.body, {
       where: {
-        id_cuenta_madre: req.params.id
+        id_cuenta_contable: req.params.id
       }
     }).then(function (result) {
       return res.sendStatus(204);
@@ -43,9 +43,9 @@ module.exports = function (app) {
     });
   })["delete"](function (req, res) {
     console.log(req.params);
-    Cuenta_madre.destroy({
+    Cuenta_contable.destroy({
       where: {
-        id_cuenta_madre: req.params.id
+        id_cuenta_contable: req.params.id
       }
     }).then(function (result) {
       return res.sendStatus(204);

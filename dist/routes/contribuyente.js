@@ -1,25 +1,27 @@
 "use strict";
 
 module.exports = function (app) {
-  var Users = app.db.models.Users;
-  app.route('/users').get(function (req, res) {
-    Users.findAll().then(function (result) {
+  var Contribuyente = app.db.models.Contribuyente;
+  app.route('/contribuyente').get(function (req, res) {
+    Contribuyente.findAll().then(function (result) {
       return res.json(result);
     })["catch"](function (error) {
-      res.status(402).json({
-        msg: error.menssage
+      res.status(412).json({
+        msg: error.message
       });
     });
   }).post(function (req, res) {
-    Users.create(req.body).then(function (result) {
+    Contribuyente.create(req.body).then(function (result) {
       return res.json(result);
     })["catch"](function (error) {
       return res.json(error.errors);
     });
   });
-  app.route('/users/:id').get(function (req, res) {
-    Users.findOne({
-      where: req.params
+  app.route('/contribuyente/:id').get(function (req, res) {
+    Contribuyente.findOne({
+      where: {
+        id_contribuyente: req.params.id
+      }
     }).then(function (result) {
       return res.json(result);
     })["catch"](function (error) {
@@ -28,8 +30,10 @@ module.exports = function (app) {
       });
     });
   }).put(function (req, res) {
-    Users.update(req.body, {
-      where: req.params
+    Contribuyente.update(req.body, {
+      where: {
+        id_contribuyente: req.params.id
+      }
     }).then(function (result) {
       return res.sendStatus(204);
     })["catch"](function (error) {
@@ -38,11 +42,13 @@ module.exports = function (app) {
       });
     });
   })["delete"](function (req, res) {
-    //const id = req.params.id;
-    Users.destroy({
-      where: req.params
-    }).then(function () {
-      return res.json(req.params);
+    console.log(req.params);
+    Contribuyente.destroy({
+      where: {
+        id_contribuyente: req.params.id
+      }
+    }).then(function (result) {
+      return res.sendStatus(204);
     })["catch"](function (error) {
       res.status(412).json({
         msg: error.message

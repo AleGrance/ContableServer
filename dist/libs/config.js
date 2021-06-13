@@ -1,7 +1,6 @@
 "use strict";
 
 module.exports = {
-  //connection: 'postgres://postgres:616113@localhost:5432/prueba'
   postgresql: {
     database: 'prueba',
     username: 'postgres',

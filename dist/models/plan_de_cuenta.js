@@ -1,0 +1,31 @@
+"use strict";
+
+module.exports = function (sequelize, DataTypes) {
+  var Plan_de_cuenta = sequelize.define('Plan_de_cuenta', {
+    id_plan_de_cuentas: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    nombre_plan_de_cuentas: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    codigo_plan_de_cuentas: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  });
+
+  Plan_de_cuenta.associate = function (models) {
+    Plan_de_cuenta.belongsTo(models.Contribuyente);
+    Plan_de_cuenta.belongsTo(models.Cuenta_madre);
+    Plan_de_cuenta.belongsTo(models.Cuenta_hijo);
+    Plan_de_cuenta.belongsTo(models.Cuenta_contable);
+    Plan_de_cuenta.hasMany(models.Detalle_compra);
+    Plan_de_cuenta.hasMany(models.Detalle_venta);
+  };
+
+  return Plan_de_cuenta;
+};

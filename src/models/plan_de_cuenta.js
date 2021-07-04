@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     codigo_plan_de_cuentas: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false
     },
   });

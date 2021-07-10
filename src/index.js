@@ -24,3 +24,4 @@ consign({
 
 
     /* some comment */
+    /* some comment */

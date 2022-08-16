@@ -40,5 +40,5 @@ module.exports = function (app) {
     });
   }
 
-  return db;
+  return db; // comentario de prueba
 };

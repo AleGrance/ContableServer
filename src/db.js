@@ -39,4 +39,6 @@ module.exports = app => {
     }
 
     return db;
+
+    // comentario de prueba
 }

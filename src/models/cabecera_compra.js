@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         condicion_venta_compra: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         total_compra: {
             type: DataTypes.INTEGER,

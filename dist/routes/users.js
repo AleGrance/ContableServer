@@ -1,5 +1,7 @@
 "use strict";
 
+var CryptoJS = require("crypto-js");
+
 module.exports = function (app) {
   var Users = app.db.models.Users;
   app.route('/users').get(function (req, res) {
@@ -11,7 +13,21 @@ module.exports = function (app) {
       });
     });
   }).post(function (req, res) {
-    Users.create(req.body).then(function (result) {
+    // Receiving data
+    var _req$body = req.body,
+        user_name = _req$body.user_name,
+        user_password = _req$body.user_password,
+        user_email = _req$body.user_email; // Creating new user
+
+    var user = {
+      user_name: user_name,
+      user_password: user_password,
+      user_email: user_email
+    }; // Encrypting password
+
+    user.user_password = CryptoJS.AES.encrypt(user.user_password, 'secret').toString(); // Insert new user
+
+    Users.create(user).then(function (result) {
       return res.json(result);
     })["catch"](function (error) {
       return res.json(error.errors);

@@ -1,3 +1,4 @@
+var CryptoJS = require("crypto-js");
 module.exports = app => {
     const Users = app.db.models.Users;
 
@@ -12,7 +13,22 @@ module.exports = app => {
                 });
         })
         .post((req, res) => {
-            Users.create(req.body)
+            // Receiving data
+            const {
+                user_name,
+                user_password,
+                user_email,
+            } = req.body;
+            // Creating new user
+            const user = {
+                user_name: user_name,
+                user_password: user_password,
+                user_email: user_email
+            }
+            // Encrypting password
+            user.user_password = CryptoJS.AES.encrypt(user.user_password, 'secret').toString();
+            // Insert new user
+            Users.create(user)
                 .then(result => res.json(result))
                 .catch(error => res.json(error.errors));
         })

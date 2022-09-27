@@ -22,7 +22,11 @@ module.exports = function (sequelize, DataType) {
   });
 
   Tasks.associate = function (models) {
-    Tasks.belongsTo(models.Users);
+    Tasks.belongsTo(models.Users, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
   };
 
   return Tasks;

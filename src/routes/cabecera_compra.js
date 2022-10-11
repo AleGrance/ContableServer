@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 module.exports = app => {
     const Cabecera_compra = app.db.models.Cabecera_compra;
     const Contribuyente = app.db.models.Contribuyente;
@@ -81,5 +82,28 @@ module.exports = app => {
                         msg: error.message
                     });
                 })
+        })
+        // Filtro en reporte
+        .post((req, res) => {
+            console.log(req.body);
+            Cabecera_compra.findAll({
+                where: {
+                    ContribuyenteIdContribuyente: req.params.id,
+                    ProveedorIdProveedor: req.body.id_proveedor,
+                    condicion_venta_compra: req.body.condicion,
+                    fecha_factura_compra: {
+                        [Op.between] : [req.body.fecha_inicio, req.body.fecha_fin]
+                    }
+                },
+                include: [{
+                    model: Proveedor
+                }]
+            })
+            .then(result => res.json(result))
+            .catch(error => {
+                res.status(404).json({
+                    msg: error.message
+                })
+            })
         })
 };

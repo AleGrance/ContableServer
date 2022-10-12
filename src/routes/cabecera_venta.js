@@ -69,9 +69,9 @@ module.exports = app => {
                     where: {
                         ContribuyenteIdContribuyente: req.params.id
                     },
-                    include: [{
-                        model: Cliente
-                    }]
+                    include: {
+                        all: true
+                    }
                 })
                 .then(result => res.json(result))
                 .catch(error => {

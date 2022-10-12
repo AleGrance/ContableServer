@@ -61,9 +61,9 @@ module.exports = function (app) {
       where: {
         ContribuyenteIdContribuyente: req.params.id
       },
-      include: [{
-        model: Cliente
-      }]
+      include: {
+        all: true
+      }
     }).then(function (result) {
       return res.json(result);
     })["catch"](function (error) {

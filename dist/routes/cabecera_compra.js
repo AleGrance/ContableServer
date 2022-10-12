@@ -70,9 +70,9 @@ module.exports = function (app) {
       where: {
         ContribuyenteIdContribuyente: req.params.id
       },
-      include: [{
-        model: Proveedor
-      }]
+      include: {
+        all: true
+      }
     }).then(function (result) {
       return res.json(result);
     })["catch"](function (error) {
@@ -90,9 +90,9 @@ module.exports = function (app) {
         condicion_venta_compra: req.body.condicion,
         fecha_factura_compra: _defineProperty({}, Op.between, [req.body.fecha_inicio, req.body.fecha_fin])
       },
-      include: [{
-        model: Proveedor
-      }]
+      include: {
+        all: true
+      }
     }).then(function (result) {
       return res.json(result);
     })["catch"](function (error) {

@@ -3,8 +3,6 @@ const {
 } = require("sequelize");
 module.exports = app => {
     const Cabecera_compra = app.db.models.Cabecera_compra;
-    const Contribuyente = app.db.models.Contribuyente;
-    const Proveedor = app.db.models.Proveedor;
 
     app.route('/cabecera_compra')
         .get((req, res) => {
@@ -33,9 +31,9 @@ module.exports = app => {
                     where: {
                         id_cabecera_compra: req.params.id,
                     },
-                    include: [{
-                        model: Contribuyente
-                    }]
+                    include: {
+                        all: true
+                    },
                 })
                 .then(result => res.json(result))
                 .catch(error => {

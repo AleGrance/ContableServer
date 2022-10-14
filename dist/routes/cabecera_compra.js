@@ -7,8 +7,6 @@ var _require = require("sequelize"),
 
 module.exports = function (app) {
   var Cabecera_compra = app.db.models.Cabecera_compra;
-  var Contribuyente = app.db.models.Contribuyente;
-  var Proveedor = app.db.models.Proveedor;
   app.route('/cabecera_compra').get(function (req, res) {
     Cabecera_compra.findAll({
       order: [['id_cabecera_compra', 'ASC']]
@@ -31,9 +29,9 @@ module.exports = function (app) {
       where: {
         id_cabecera_compra: req.params.id
       },
-      include: [{
-        model: Contribuyente
-      }]
+      include: {
+        all: true
+      }
     }).then(function (result) {
       return res.json(result);
     })["catch"](function (error) {

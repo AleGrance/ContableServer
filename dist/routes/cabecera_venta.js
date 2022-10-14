@@ -1,8 +1,12 @@
 "use strict";
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var _require = require("sequelize"),
+    Op = _require.Op;
+
 module.exports = function (app) {
   var Cabecera_venta = app.db.models.Cabecera_venta;
-  var Cliente = app.db.models.Cliente;
   app.route('/cabecera_venta').get(function (req, res) {
     Cabecera_venta.findAll({
       order: [['id_cabecera_venta', 'ASC']]
@@ -24,6 +28,9 @@ module.exports = function (app) {
     Cabecera_venta.findOne({
       where: {
         id_cabecera_venta: req.params.id
+      },
+      include: {
+        all: true
       }
     }).then(function (result) {
       return res.json(result);
@@ -60,6 +67,26 @@ module.exports = function (app) {
     Cabecera_venta.findAll({
       where: {
         ContribuyenteIdContribuyente: req.params.id
+      },
+      include: {
+        all: true
+      }
+    }).then(function (result) {
+      return res.json(result);
+    })["catch"](function (error) {
+      res.status(404).json({
+        msg: error.message
+      });
+    });
+  }) // Filtro en reporte
+  .post(function (req, res) {
+    console.log(req.body);
+    Cabecera_venta.findAll({
+      where: {
+        ContribuyenteIdContribuyente: req.params.id,
+        ClienteIdCliente: req.body.id_cliente,
+        condicion_venta_venta: req.body.condicion,
+        fecha_factura_venta: _defineProperty({}, Op.between, [req.body.fecha_inicio, req.body.fecha_fin])
       },
       include: {
         all: true

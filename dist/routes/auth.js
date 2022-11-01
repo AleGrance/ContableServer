@@ -42,7 +42,8 @@ module.exports = function (app) {
       res.status(200).send({
         message: "Acceso correcto",
         auth: true,
-        token: token
+        token: token,
+        usuario: result.user_email
       });
     })["catch"](function (error) {
       res.send(error);

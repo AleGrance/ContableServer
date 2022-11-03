@@ -43,7 +43,7 @@ module.exports = function (app) {
         message: "Acceso correcto",
         auth: true,
         token: token,
-        usuario: result.user_email
+        usuario: result.user_fullname
       });
     })["catch"](function (error) {
       res.send(error);

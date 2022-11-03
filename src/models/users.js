@@ -13,6 +13,13 @@ module.exports = (sequelize, DataType) => {
                 notEmpty: false
             }
         },
+        user_fullname: {
+            type: DataType.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: false
+            }
+        },
         user_password: {
             type: DataType.STRING,
             allowNull: false,
@@ -35,6 +42,15 @@ module.exports = (sequelize, DataType) => {
 
     Users.associate = (models) => {
         Users.hasMany(models.Tasks);
+    };
+
+    Users.associate = (models) => {
+        Users.belongsTo(models.Roles, {
+            foreignKey: {
+                name: 'role_id',
+                allowNull: false
+              }
+        });
     };
 
     return Users;

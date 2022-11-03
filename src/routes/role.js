@@ -1,10 +1,9 @@
-var CryptoJS = require("crypto-js");
 module.exports = app => {
-    const Users = app.db.models.Users;
+    const Roles = app.db.models.Roles;
 
-    app.route('/users')
+    app.route('/roles')
         .get((req, res) => {
-            Users.findAll()
+            Roles.findAll()
                 .then(result => res.json(result))
                 .catch(error => {
                     res.status(402).json({
@@ -13,34 +12,19 @@ module.exports = app => {
                 });
         })
         .post((req, res) => {
-            // Receiving data
-            const {
-                user_name,
-                user_password,
-                user_email,
-                user_fullname,
-                role_id
-            } = req.body;
-            // Creating new user
-            const user = {
-                user_name: user_name,
-                user_password: user_password,
-                user_email: user_email,
-                user_fullname: user_fullname,
-                role_id: role_id,
-            }
-            // Encrypting password
-            user.user_password = CryptoJS.AES.encrypt(user.user_password, 'secret').toString();
-            // Insert new user
-            Users.create(user)
+            console.log(req.body);
+            Roles.create(req.body)
                 .then(result => res.json(result))
                 .catch(error => res.json(error.errors));
         })
 
-    app.route('/users/:user_id')
+    app.route('/roles/:role_id')
         .get((req, res) => {
-            Users.findOne({
-                    where: req.params
+            Roles.findOne({
+                    where: req.params,
+                    include: [{
+                        model: Users
+                    }]
                 })
                 .then(result => res.json(result))
                 .catch(error => {
@@ -50,7 +34,7 @@ module.exports = app => {
                 });
         })
         .put((req, res) => {
-            Users.update(req.body, {
+            Roles.update(req.body, {
                     where: req.params
                 })
                 .then(result => res.sendStatus(204))
@@ -62,7 +46,7 @@ module.exports = app => {
         })
         .delete((req, res) => {
             //const id = req.params.id;
-            Users.destroy({
+            Roles.destroy({
                     where: req.params
                 })
                 .then(() => res.json(req.params))

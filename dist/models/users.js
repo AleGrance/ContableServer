@@ -14,6 +14,13 @@ module.exports = function (sequelize, DataType) {
         notEmpty: false
       }
     },
+    user_fullname: {
+      type: DataType.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: false
+      }
+    },
     user_password: {
       type: DataType.STRING,
       allowNull: false,
@@ -36,6 +43,15 @@ module.exports = function (sequelize, DataType) {
 
   Users.associate = function (models) {
     Users.hasMany(models.Tasks);
+  };
+
+  Users.associate = function (models) {
+    Users.belongsTo(models.Roles, {
+      foreignKey: {
+        name: 'role_id',
+        allowNull: false
+      }
+    });
   };
 
   return Users;

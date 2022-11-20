@@ -80,23 +80,42 @@ module.exports = function (app) {
     });
   }) // Filtro en reporte
   .post(function (req, res) {
-    console.log(req.body);
-    Cabecera_compra.findAll({
-      where: {
-        ContribuyenteIdContribuyente: req.params.id,
-        ProveedorIdProveedor: req.body.id_proveedor,
-        condicion_venta_compra: req.body.condicion,
-        fecha_factura_compra: _defineProperty({}, Op.between, [req.body.fecha_inicio, req.body.fecha_fin])
-      },
-      include: {
-        all: true
-      }
-    }).then(function (result) {
-      return res.json(result);
-    })["catch"](function (error) {
-      res.status(404).json({
-        msg: error.message
+    //console.log(req.body);
+    if (req.body.id_proveedor.length === 0) {
+      Cabecera_compra.findAll({
+        where: {
+          ContribuyenteIdContribuyente: req.params.id,
+          condicion_venta_compra: req.body.condicion,
+          fecha_factura_compra: _defineProperty({}, Op.between, [req.body.fecha_inicio, req.body.fecha_fin])
+        },
+        include: {
+          all: true
+        }
+      }).then(function (result) {
+        return res.json(result);
+      })["catch"](function (error) {
+        res.status(404).json({
+          msg: error.message
+        });
       });
-    });
+    } else {
+      Cabecera_compra.findAll({
+        where: {
+          ContribuyenteIdContribuyente: req.params.id,
+          ProveedorIdProveedor: req.body.id_proveedor,
+          condicion_venta_compra: req.body.condicion,
+          fecha_factura_compra: _defineProperty({}, Op.between, [req.body.fecha_inicio, req.body.fecha_fin])
+        },
+        include: {
+          all: true
+        }
+      }).then(function (result) {
+        return res.json(result);
+      })["catch"](function (error) {
+        res.status(404).json({
+          msg: error.message
+        });
+      });
+    }
   });
 };

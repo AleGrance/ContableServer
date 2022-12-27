@@ -4,7 +4,9 @@ module.exports = function (app) {
   var Tasks = app.db.models.Tasks;
   var Users = app.db.models.Users;
   app.route('/tasks').get(function (req, res) {
-    Tasks.findAll().then(function (result) {
+    Tasks.findAll({
+      order: [['createdAt', 'DESC']]
+    }).then(function (result) {
       return res.json(result);
     })["catch"](function (error) {
       res.status(402).json({

@@ -4,7 +4,9 @@ module.exports = app => {
 
     app.route('/tasks')
         .get((req, res) => {
-            Tasks.findAll()
+            Tasks.findAll({
+                order: [['createdAt', 'DESC']]
+            })
                 .then(result => res.json(result))
                 .catch(error => {
                     res.status(402).json({

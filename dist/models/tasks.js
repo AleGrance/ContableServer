@@ -18,6 +18,22 @@ module.exports = function (sequelize, DataType) {
     task_status: {
       type: DataType.STRING,
       allowNull: false
+    },
+    fecha_turno: {
+      type: DataType.DATEONLY,
+      allowNull: false
+    },
+    hora_turno: {
+      type: DataType.TIME,
+      allowNull: false
+    },
+    nro_cel: {
+      type: DataType.STRING,
+      allowNull: false
+    },
+    sanatorio: {
+      type: DataType.STRING,
+      allowNull: false
     }
   });
 
